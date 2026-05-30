@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Cosmic Numerology Calculator</title>
+    <!-- Tabler Icons & Google Fonts for Premium Look -->
+    <link rel="stylesheet" href="tabler-icons.min.css">
+    <link href="font_css.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* High-quality Unsplash Cosmic Background Image */
+            --bg-image: url('assests/bg.jfif');
+            --card-bg: rgba(15, 11, 28, 0.65);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --text-primary: #ffffff;
+            --text-secondary: #c4b9df;
+            --accent-gold: #ffdf7a;
+            --accent-glow: rgba(191, 85, 236, 0.3);
+            
+            /* Neon Colors for Number Cards */
+            --purple: #bf55ec;
+            --teal: #22a7f0;
+            --coral: #ff4757;
+            --pink: #ff6b81;
+            --blue: #1e90ff;
+        }
+
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+        }
+
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background: linear-gradient(rgba(10, 6, 23, 0.85), rgba(20, 12, 38, 0.9)), var(--bg-image);
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 1rem;
+        }
+
+        .num-wrap { 
+            background: rgba(12, 8, 24, 0.5);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-radius: 30px;
+            padding: 3rem 2rem; 
+            max-width: 750px; 
+            width: 100%;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(191, 85, 236, 0.05);
+        }
+
+        .num-header { 
+            text-align: center; 
+            margin-bottom: 2.5rem; 
+            position: relative;
+        }
+
+        /* Pure CSS Animated Icon Container */
+        .hero-graphic-container {
+            width: 85px;
+            height: 85px;
+            margin: 0 auto 15px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .hero-graphic-container svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 0 15px rgba(191, 85, 236, 0.7));
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .num-header h1 { 
+            font-size: 34px; 
+            font-weight: 700; 
+            background: linear-gradient(120deg, #ffffff 40%, var(--accent-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px; 
+            letter-spacing: 0.5px;
+        }
+
+        .num-header p { 
+            font-size: 15px; 
+            color: var(--text-secondary); 
+            font-weight: 300;
+        }
+
+        .card { 
+            background: var(--card-bg); 
+            border: 1px solid var(--card-border); 
+            border-radius: 20px; 
+            padding: 2.5rem 2rem; 
+            margin-bottom: 1.5rem; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05);
+        }
+
+        .field-full { 
+            margin-bottom: 1.5rem; 
+        }
+
+        .field-label { 
+            font-size: 14px; 
+            color: var(--accent-gold); 
+            margin-bottom: 10px; 
+            display: block; 
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        input[type=text], input[type=date] { 
+            width: 100%; 
+            padding: 15px 18px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            color: #fff;
+            font-family: inherit;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+
+        input[type=text]:focus, input[type=date]:focus {
+            outline: none;
+            border-color: var(--purple);
+            box-shadow: 0 0 15px var(--accent-glow);
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        input[type=date]::-webkit-calendar-picker-indicator {
+            filter: invert(1) sepia(1) saturate(5) hue-rotate(240deg);
+            cursor: pointer;
+        }
+
+        .calc-btn { 
+            width: 100%; 
+            padding: 16px; 
+            background: linear-gradient(90deg, #bf55ec, #1e90ff);
+            border: none; 
+            border-radius: 12px; 
+            font-size: 16px; 
+            font-weight: 600; 
+            color: #ffffff; 
+            cursor: pointer; 
+            margin-top: 10px; 
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 8px 25px rgba(191, 85, 236, 0.3);
+        }
+
+        .calc-btn:hover { 
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(30, 144, 255, 0.5);
+            background: linear-gradient(90deg, #1e90ff, #bf55ec);
+        }
+
+        .results { 
+            display: none; 
+            animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .results.show { 
+            display: block; 
+        }
+
+        .results-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); 
+            gap: 14px; 
+            margin-bottom: 1.5rem; 
+        }
+
+        .num-card { 
+            background: var(--card-bg); 
+            border: 1px solid var(--card-border);
+            border-radius: 16px; 
+            padding: 1.5rem 1.25rem; 
+            text-align: center; 
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+        
+        .num-card:hover {
+            background: rgba(255, 255, 255, 0.04);
+            transform: translateY(-4px);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .num-card .label { 
+            font-size: 11px; 
+            color: var(--text-secondary); 
+            margin-bottom: 10px; 
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .num-card .number { 
+            font-size: 46px; 
+            font-weight: 700; 
+            line-height: 1; 
+            margin-bottom: 8px;
+        }
+
+        .num-card .num-name { 
+            font-size: 12px; 
+            color: #fff; 
+            font-weight: 500;
+            opacity: 0.85;
+        }
+
+        .purple-num { color: var(--purple); filter: drop-shadow(0 0 12px rgba(191,85,236,0.5)); }
+        .teal-num { color: var(--teal); filter: drop-shadow(0 0 12px rgba(34,167,240,0.5)); }
+        .coral-num { color: var(--coral); filter: drop-shadow(0 0 12px rgba(255,71,87,0.5)); }
+        .pink-num { color: var(--pink); filter: drop-shadow(0 0 12px rgba(255,107,129,0.5)); }
+        .blue-num { color: var(--blue); filter: drop-shadow(0 0 12px rgba(30,144,255,0.5)); }
+
+        .meaning-card { 
+            background: var(--card-bg); 
+            border: 1px solid var(--card-border); 
+            border-radius: 20px; 
+            padding: 2.5rem 2rem; 
+            margin-bottom: 1.5rem; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+
+        .meaning-title { 
+            font-size: 22px; 
+            font-weight: 600; 
+            color: var(--accent-gold); 
+            margin-bottom: 8px; 
+            letter-spacing: 0.3px;
+        }
+
+        .meaning-sub { 
+            font-size: 15px; 
+            color: var(--text-secondary); 
+            margin-bottom: 20px; 
+            line-height: 1.6;
+        }
+
+        .trait-list { 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 10px; 
+        }
+
+        .trait { 
+            background: rgba(191, 85, 236, 0.08); 
+            border: 1px solid rgba(191, 85, 236, 0.25); 
+            border-radius: 20px; 
+            padding: 6px 16px; 
+            font-size: 13px; 
+            color: #e0b0ff; 
+            font-weight: 500;
+        }
+
+        .section-title { 
+            font-size: 13px; 
+            font-weight: 600; 
+            color: var(--accent-gold); 
+            margin-bottom: 14px; 
+            text-transform: uppercase; 
+            letter-spacing: 0.12em; 
+        }
+
+        .compat-row { 
+            display: flex; 
+            gap: 10px; 
+            flex-wrap: wrap; 
+        }
+
+        .compat-num { 
+            width: 38px; 
+            height: 38px; 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 14px; 
+            font-weight: 600; 
+            border: 1px solid var(--card-border); 
+            transition: all 0.3s ease;
+        }
+
+        .compat-good { 
+            background: linear-gradient(135deg, #2ecc71, #27ae60); 
+            color: #fff; 
+            border-color: transparent;
+            box-shadow: 0 4px 12px rgba(46, 204, 113, 0.35);
+        }
+
+        .compat-neutral { 
+            background: rgba(255, 255, 255, 0.04); 
+            color: var(--text-secondary); 
+        }
+
+        .reset-btn { 
+            width: 100%; 
+            padding: 14px; 
+            background: transparent; 
+            border: 1px solid var(--card-border); 
+            border-radius: 12px; 
+            font-size: 14px; 
+            color: var(--text-secondary); 
+            cursor: pointer; 
+            margin-top: 10px; 
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .reset-btn:hover { 
+            background: rgba(255, 255, 255, 0.06); 
+            color: #fff;
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        .divider { 
+            border: none; 
+            border-top: 1px solid var(--card-border); 
+            margin: 1.75rem 0; 
+        }
+        
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="num-wrap">
+  <h2 class="sr-only">Numerology calculator</h2>
+  
+  <div class="num-header">
+    <!-- Beautiful, Infinite Resolution Embedded SVG Code Instead of Image Link -->
+    <div class="hero-graphic-container">
+        <svg xmlns="" viewBox="0 0 64 64">
+            <!-- Glowing Mystical Crescent Moon -->
+            <path d="M42,12C28.4,12,17.3,22.7,17,36.2c-0.3,13.8,10.6,25.2,24.4,25.4c1.6,0,3.1-0.2,4.6-0.5c-9,0-17-5.8-19.8-14.4 c-3.5-10.7,2.3-22.3,13-25.8c4.3-1.4,8.8-1.5,13.1-0.4C49.6,15.2,46,12.5,42,12z" fill="#dfc9ff"/>
+            <!-- Sparkle Star 1 -->
+            <polygon points="18,14 20,19 25,19 21,22 23,27 18,24 13,27 15,22 11,19 16,19" fill="#ffdf7a"/>
+            <!-- Sparkle Star 2 -->
+            <polygon points="46,40 47,42 50,42 48,44 49,46 46,45 43,46 44,44 42,42 45,42" fill="#ffdf7a"/>
+            <!-- Mini Sparkle -->
+            <circle cx="12" cy="40" r="2" fill="#bf55ec"/>
+            <circle cx="35" cy="20" r="1.5" fill="#22a7f0"/>
+        </svg>
+    </div>
+    
+    <h1>Cosmic Numerology</h1>
+    <p>Discover the hidden numbers that shape your destiny and life path</p>
+  </div>
+
+  <div class="card" id="form-card">
+    <div class="field-full">
+      <label class="field-label" for="fullname">Full Name (As given at birth)</label>
+      <input type="text" id="fullname" placeholder="e.g.MANOJ KUMAR" />
+    </div>
+    <div class="field-full">
+      <label class="field-label" for="dob">Date of Birth</label>
+      <input type="date" id="dob" />
+    </div>
+    <button class="calc-btn" onclick="calculate()"><i class="ti ti-calculator" aria-hidden="true"></i> Calculate My Numbers</button>
+  </div>
+
+  <div class="results" id="results">
+    <div class="results-grid">
+      <div class="num-card">
+        <div class="label">Life Path</div>
+        <div class="number purple-num" id="res-life">—</div>
+        <div class="num-name" id="res-life-name">—</div>
+      </div>
+      <div class="num-card">
+        <div class="label">Destiny</div>
+        <div class="number teal-num" id="res-destiny">—</div>
+        <div class="num-name" id="res-destiny-name">—</div>
+      </div>
+      <div class="num-card">
+        <div class="label">Soul Urge</div>
+        <div class="number coral-num" id="res-soul">—</div>
+        <div class="num-name" id="res-soul-name">—</div>
+      </div>
+      <div class="num-card">
+        <div class="label">Personality</div>
+        <div class="number pink-num" id="res-personality">—</div>
+        <div class="num-name" id="res-personality-name">—</div>
+      </div>
+      <div class="num-card">
+        <div class="label">Birthday</div>
+        <div class="number blue-num" id="res-birthday">—</div>
+        <div class="num-name" id="res-birthday-name">—</div>
+      </div>
+    </div>
+
+    <div class="meaning-card" id="life-meaning">
+      <div class="meaning-title" id="m-title">—</div>
+      <div class="meaning-sub" id="m-sub">—</div>
+      <hr class="divider">
+      <div class="section-title">Core Traits</div>
+      <div class="trait-list" id="m-traits"></div>
+      <hr class="divider">
+      <div class="section-title">Compatible Numbers</div>
+      <div class="compat-row" id="m-compat"></div>
+    </div>
+
+    <button class="reset-btn" onclick="reset()"><i class="ti ti-refresh" aria-hidden="true"></i> Start Over</button>
+  </div>
+</div>
+
+<script>
+const meanings = {
+  1: { name: "The Leader", sub: "Independent, pioneering, and driven. You are a natural-born leader with strong willpower and ambition.", traits: ["Pioneer","Independent","Ambitious","Creative","Strong-willed","Original"], compat: [1,3,5,9] },
+  2: { name: "The Diplomat", sub: "Cooperative, sensitive, and harmonious. You thrive in partnerships and bring peace to every situation.", traits: ["Diplomatic","Sensitive","Cooperative","Gentle","Intuitive","Supportive"], compat: [2,4,6,8] },
+  3: { name: "The Communicator", sub: "Expressive, creative, and joyful. You have a gift for words, art, and inspiring others with your enthusiasm.", traits: ["Creative","Expressive","Optimistic","Social","Artistic","Witty"], compat: [1,3,5,9] },
+  4: { name: "The Builder", sub: "Practical, disciplined, and reliable. You build strong foundations and bring order and structure to the world.", traits: ["Disciplined","Reliable","Practical","Hard-working","Organized","Loyal"], compat: [2,4,6,8] },
+  5: { name: "The Adventurer", sub: "Free-spirited, versatile, and curious. You crave change, freedom, and exciting new experiences.", traits: ["Adventurous","Freedom-loving","Versatile","Curious","Energetic","Adaptable"], compat: [1,3,5,7] },
+  6: { name: "The Nurturer", sub: "Caring, responsible, and loving. You are drawn to family, community, and making life beautiful for others.", traits: ["Caring","Responsible","Nurturing","Harmonious","Compassionate","Artistic"], compat: [2,4,6,9] },
+  7: { name: "The Seeker", sub: "Analytical, introspective, and spiritual. You seek truth and wisdom through deep thinking and inner exploration.", traits: ["Analytical","Spiritual","Introspective","Wise","Perfectionistic","Reserved"], compat: [5,7,9] },
+  8: { name: "The Achiever", sub: "Ambitious, authoritative, and materially focused. You have natural executive ability and drive for success.", traits: ["Ambitious","Authoritative","Business-minded","Resilient","Powerful","Organized"], compat: [2,4,6,8] },
+  9: { name: "The Humanitarian", sub: "Compassionate, idealistic, and generous. You have a deep desire to serve humanity and make the world better.", traits: ["Compassionate","Idealistic","Generous","Selfless","Wise","Universal"], compat: [1,3,6,9] },
+  11: { name: "The Visionary", sub: "A master number — highly intuitive, inspirational, and spiritually aware. You are here to uplift others.", traits: ["Intuitive","Visionary","Inspirational","Spiritual","Sensitive","Idealistic"], compat: [2,11,22] },
+  22: { name: "The Master Builder", sub: "A master number — you have the power to turn big dreams into reality. Practical idealism at its finest.", traits: ["Visionary","Practical","Disciplined","Ambitious","Powerful","Constructive"], compat: [4,11,22] },
+  33: { name: "The Master Teacher", sub: "A master number — the highest expression of compassion and service. You inspire and heal on a grand scale.", traits: ["Compassionate","Nurturing","Teacher","Selfless","Uplifting","Wise"], compat: [6,11,33] }
+};
+
+const letterVals = {A:1,B:2,C:3,D:4,E:5,F:6,G:7,H:8,I:9,J:1,K:2,L:3,M:4,N:5,O:6,P:7,Q:8,R:9,S:1,T:2,U:3,V:4,W:5,X:6,Y:7,Z:8};
+const vowels = new Set(['A','E','I','O','U']);
+
+function reduceNum(n) {
+  if (n === 11 || n === 22 || n === 33) return n;
+  while (n > 9) {
+    n = String(n).split('').reduce((a,d) => a + parseInt(d), 0);
+    if (n === 11 || n === 22 || n === 33) return n;
+  }
+  return n;
+}
+
+function nameToNums(name, filter) {
+  return name.toUpperCase().replace(/[^A-Z]/g,'').split('').filter(c => filter ? filter(c) : true).map(c => letterVals[c] || 0).reduce((a,b) => a+b, 0);
+}
+
+function calculate() {
+  const name = document.getElementById('fullname').value.trim();
+  const dob = document.getElementById('dob').value;
+  if (!name || !dob) { alert('Please enter both your name and date of birth.'); return; }
+
+  const [y,m,d] = dob.split('-').map(Number);
+
+  const lifeRaw = String(y).split('').reduce((a,b)=>a+parseInt(b),0) + m + d;
+  const life = reduceNum(lifeRaw);
+
+  const destinyRaw = nameToNums(name, null);
+  const destiny = reduceNum(destinyRaw);
+
+  const soulRaw = nameToNums(name, c => vowels.has(c));
+  const soul = reduceNum(soulRaw);
+
+  const personalityRaw = nameToNums(name, c => !vowels.has(c));
+  const personality = reduceNum(personalityRaw);
+
+  const birthday = reduceNum(d);
+
+  function set(id, val, nameId) {
+    document.getElementById(id).textContent = val;
+    const m = meanings[val] || meanings[reduceNum(val)];
+    if (nameId && m) document.getElementById(nameId).textContent = m.name;
+  }
+
+  set('res-life', life, 'res-life-name');
+  set('res-destiny', destiny, 'res-destiny-name');
+  set('res-soul', soul, 'res-soul-name');
+  set('res-personality', personality, 'res-personality-name');
+  set('res-birthday', birthday, 'res-birthday-name');
+
+  const lm = meanings[life] || meanings[reduceNum(life)] || meanings[1];
+  document.getElementById('m-title').textContent = 'Life Path ' + life + ' — ' + lm.name;
+  document.getElementById('m-sub').textContent = lm.sub;
+
+  const traitsEl = document.getElementById('m-traits');
+  traitsEl.innerHTML = lm.traits.map(t => `<span class="trait">${t}</span>`).join('');
+
+  const compatEl = document.getElementById('m-compat');
+  const all = [1,2,3,4,5,6,7,8,9,11,22];
+  compatEl.innerHTML = all.map(n => {
+    const isGood = lm.compat.includes(n);
+    return `<div class="compat-num ${isGood ? 'compat-good' : 'compat-neutral'}">${n}</div>`;
+  }).join('');
+
+  document.getElementById('results').classList.add('show');
+  document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function reset() {
+  document.getElementById('fullname').value = '';
+  document.getElementById('dob').value = '';
+  document.getElementById('results').classList.remove('show');
+  document.getElementById('form-card').scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
